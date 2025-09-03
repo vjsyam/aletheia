@@ -11,6 +11,7 @@ export default function SignUpPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [info, setInfo] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
   const signUp = async () => {
@@ -22,10 +23,16 @@ export default function SignUpPage() {
       setLoading(true)
       setError(null)
       const supabase = getSupabase()!
-      const { data, error } = await supabase.auth.signUp({ email, password })
+      const redirectTo = typeof window !== 'undefined' ? window.location.origin : undefined
+      const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: redirectTo } })
       if (error) throw error
       if (name.trim()) {
         await supabase.auth.updateUser({ data: { name: name.trim() } })
+      }
+      // If email confirmation is required, session will be null
+      if (!data.session) {
+        setInfo('Account created. Please check your email to confirm your address before signing in.')
+        return
       }
       window.location.href = '/'
     } catch (e: any) {
@@ -64,6 +71,7 @@ export default function SignUpPage() {
             <input type="password" value={password} onChange={e=>setPassword(e.target.value)} className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3" placeholder="••••••••" />
           </div>
           {error && <p className="text-sm text-red-400">{error}</p>}
+          {info && <p className="text-sm text-green-400">{info}</p>}
           <button disabled={loading} onClick={signUp} className="btn-primary w-full inline-flex items-center justify-center gap-2">
             <UserPlus className="w-4 h-4"/> {loading ? 'Creating…' : 'Sign up'}
           </button>

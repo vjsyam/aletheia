@@ -36,11 +36,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(() => { try { const t = localStorage.getItem('aletheia_theme'); const h = document.documentElement; if (t === 'dark') h.classList.add('dark'); else if (t === 'light') h.classList.remove('dark'); } catch (e) {} })();`,
+            __html: `(() => { try { const t = localStorage.getItem('aletheia_theme'); const h = document.documentElement; if (t === 'light') h.classList.remove('dark'); else h.classList.add('dark'); } catch (e) {} })();`,
           }}
         />
       </head>

@@ -1,26 +1,252 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #1f2937;
+  --muted: #f5f5f5;
+  --muted-foreground: #4b5563;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #2563eb;
+  --radius: 0.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: #121212;
+  --foreground: #EAEAEA;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e1e1e;
+  --secondary-foreground: #a0a0a0;
+  --muted: #2a2a2a;
+  --muted-foreground: #9ca3af;
+  --accent: #60a5fa;
+  --accent-foreground: #0b1220;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #374151;
+  --input: #1f2937;
+  --ring: #3b82f6;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border));
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #525252;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+}
+
+@keyframes synaptic-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-synaptic-pulse {
+  animation: synaptic-pulse 1.5s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-300 border border-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 dark:border-gray-600;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white/80 dark:bg-gray-900/30 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-black/20;
+}
+
+.card-hover {
+  @apply hover:border-gray-600/50 hover:bg-gray-900/40;
+}
+
+/* Philosopher-specific colors */
+.philosopher-utilitarian {
+  @apply text-cyan-400 border-cyan-400/50;
+}
+
+.philosopher-deontologist {
+  @apply text-fuchsia-400 border-fuchsia-400/50;
+}
+
+.philosopher-virtue {
+  @apply text-yellow-400 border-yellow-400/50;
+}
+
+/* Responsive grid */
+.grid-responsive {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+}
+
+/* Custom focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+}
+
+/* Markdown content styling (no typography plugin) */
+.prose-custom {
+  @apply max-w-none text-gray-700 dark:text-gray-300 leading-relaxed;
+}
+
+.prose-custom h1 {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-4;
+}
+
+.prose-custom h2 {
+  @apply text-xl font-semibold text-gray-900 dark:text-white mb-3;
+}
+
+.prose-custom h3 {
+  @apply text-lg font-medium text-gray-900 dark:text-white mb-2;
+}
+
+.prose-custom p {
+  @apply text-gray-700 dark:text-gray-300 mb-3 leading-relaxed;
+}
+
+.prose-custom strong {
+  @apply text-gray-900 dark:text-white font-semibold;
+}
+
+.prose-custom ul {
+  @apply list-disc list-inside text-gray-700 dark:text-gray-300 mb-3;
+}
+
+.prose-custom ol {
+  @apply list-decimal list-inside text-gray-700 dark:text-gray-300 mb-3;
+}
+
+.prose-custom li {
+  @apply mb-1;
+}
+
+.prose-custom blockquote {
+  @apply border-l-4 border-blue-500 pl-4 italic text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 py-2 rounded-r;
+}
+
+.prose-custom code {
+  @apply bg-gray-100 dark:bg-gray-800 text-cyan-700 dark:text-cyan-400 px-2 py-1 rounded text-sm;
+}
+
+.prose-custom pre {
+  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto;
+}
+
+.prose-custom pre code {
+  @apply bg-transparent p-0;
 }
